@@ -5,7 +5,8 @@ include "root" {
 locals {
   base_source = "${dirname(find_in_parent_folders())}/..//terraform/eks"
   account_vars = read_terragrunt_config(find_in_parent_folders("account.hcl"))
-  environment = local.account_vars.locals.environment 
+  environment = local.account_vars.locals.environment
+  account_id = local.account_vars.locals.aws_account_id
 }
 
 dependencies {
@@ -23,6 +24,7 @@ terraform {
 inputs = {
   eks_cluster_name = "${local.environment}-eks-test"
   eks_cluster_version = "1.24"
+  account_id = local.account_id
   vpc_id = dependency.vpc.outputs.vpc_id
   vpc_private_subnets = dependency.vpc.outputs.vpc_private_subnets
   cluster_endpoint_public_access = true
@@ -32,30 +34,17 @@ inputs = {
   eks_managed_node_groups = {
     one = {
       name = "${local.environment}node-group-1"
-
       instance_types = ["t2.micro"]
-
       min_size     = 1
       max_size     = 3
       desired_size = 2
     }
-
-    two = {
-      name = "${local.environment}node-group-2"
-
-      instance_types = ["t2.micro"]
-
-      min_size     = 1
-      max_size     = 2
-      desired_size = 1
-    }
   }
+  create_aws_auth_configmap = true
   manage_aws_auth_configmap = true
-  aws_auth_roles = [
-    {
-      rolearn  = "arn:aws:iam::791844155025:policy/EKSAdminRole"
-      username = "EKSAdminRole"
-      groups   = ["system:masters"]
-    },
-  ]
+  eks_admin_role_name = "eks-admin-role"
+  tags = {
+    Environment = local.environment
+    Terraform   = "true"
+  }
 }

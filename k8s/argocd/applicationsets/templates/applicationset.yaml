@@ -1,0 +1,50 @@
+{{- range .Values.applicationsets }}
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: {{ .name }}
+  namespace: argocd
+  {{- if .annotations }}
+  annotations:
+    {{- include .annotations }}
+  {{- end }}
+spec:
+  destination:
+    namespace: {{ .namespace }}
+    server: {{ .cluster }}
+  source:
+    path: {{ .path }}
+    repoURL: {{ .repoURL }}
+    targetRevision: HEAD
+  project: {{ .project }}
+  generators:
+    - list:
+        elements:
+          - cluster: {{ .cluster }}
+  template:
+    metadata:
+      name: {{ .name }}
+      namespace: {{ .namespace }}
+    spec:
+      project: {{ .project }}
+      source:
+        repoURL: {{ .repoURL }}
+        targetRevision: HEAD
+        path: {{ .path }}
+        helm:
+          {{- if .valueFiles }}
+          valueFiles:
+            {{- range .valueFiles }}
+            - {{ . }}
+            {{- end }}
+          {{- end }}
+      destination:
+        server: {{ .cluster }}
+        namespace: {{ .namespace }}
+      syncPolicy:
+        automated:
+          selfHeal: true
+          prune: true
+        syncOptions:
+          - CreateNamespace=true
+{{- end }}

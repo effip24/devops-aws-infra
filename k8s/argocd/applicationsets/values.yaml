@@ -1,0 +1,10 @@
+applicationsets:
+  - name: flags
+    namespace: dev
+    cluster: https://kubernetes.default.svc
+    project: default
+    repoURL: https://github.com/effip24/devops.git
+    path: argocd/charts/main-templates/
+    valueFiles:
+      - values/dev/app1.yaml
+      - values/dev/app2.yaml
