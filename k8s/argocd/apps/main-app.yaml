@@ -7,7 +7,7 @@ spec:
     namespace: apps
     server: "https://kubernetes.default.svc"
   source:
-    path: k8s/argocd/argo-apps/applicationsets/
+    path: k8s/argocd/applicationsets
     repoURL: "https://github.com/effip24/devops-aws-infra.git"
     targetRevision: main
   project: default
