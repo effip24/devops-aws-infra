@@ -23,6 +23,7 @@ remote_state {
   }
 }
 
+
 inputs = merge(
   local.account_vars.locals,
   local.region_vars.locals,
