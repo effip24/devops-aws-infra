@@ -3,8 +3,8 @@ applicationsets:
     namespace: dev
     cluster: https://kubernetes.default.svc
     project: default
-    repoURL: https://github.com/effip24/devops.git
-    path: argocd/charts/main-templates/
+    repoURL: https://github.com/effip24/devops-aws-infra.git
+    path: argocd/charts/main-app/
     valueFiles:
       - values/dev/app1.yaml
       - values/dev/app2.yaml
