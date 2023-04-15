@@ -19,5 +19,5 @@ variable "argocd_version" {
 }
 
 variable "argocd_values" {
-  type = any
+  type = string
 }

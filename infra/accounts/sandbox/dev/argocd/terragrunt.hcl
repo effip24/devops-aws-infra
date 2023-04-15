@@ -27,8 +27,5 @@ inputs = {
   argocd_repo = "https://argoproj.github.io/argo-helm"
   argocd_chart = "argo-cd"
   argocd_version = "5.29.1"
-
-  argocd_values = [
-    file("${get_parent_terragrunt_dir()}/../k8s/argocd/apps/main-app.yaml")
-  ]
+  argocd_values = "${get_parent_terragrunt_dir()}/../k8s/argocd/apps/main.yaml"
 }
