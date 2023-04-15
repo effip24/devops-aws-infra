@@ -1,5 +1,5 @@
 applicationsets:
-  - name: root-dev
+  - name: nginx1
     namespace: dev
     cluster: https://kubernetes.default.svc
     project: default
@@ -7,4 +7,12 @@ applicationsets:
     path: k8s/charts/main-apps/
     valueFiles:
       - values/dev/app1.yaml
-      - values/dev/app2.yaml
+
+  - name: nginx2
+    namespace: dev
+    cluster: https://kubernetes.default.svc
+    project: default
+    repoURL: https://github.com/effip24/devops-aws-infra.git
+    path: k8s/charts/main-apps/
+    valueFiles:
+      - values/dev/app2.yaml      
