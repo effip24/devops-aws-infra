@@ -28,6 +28,20 @@ spec:
     - list:
         elements:
           - cluster: {{ .cluster }}
+  template:
+    metadata:
+      name: {{ .name }}
+      namespace: {{ .namespace }}
+    spec:
+      project: {{ .project }}
+      source:
+        repoURL: {{ .repoURL }}
+        targetRevision: HEAD
+        path: {{ .path }}
+
+      destination:
+        server: {{ .cluster }}
+        namespace: {{ .namespace }}
   syncPolicy:
     automated:
       selfHeal: true
