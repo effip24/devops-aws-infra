@@ -4,7 +4,7 @@ metadata:
   name: main-app
 spec:
   destination:
-    namespace: apps
+    namespace: dev
     server: "https://kubernetes.default.svc"
   source:
     path: k8s/argocd/applicationsets
@@ -13,5 +13,7 @@ spec:
   project: default
   syncPolicy:
     automated:
-      prune: true
       selfHeal: true
+      prune: true
+    syncOptions:
+      - CreateNamespace=true

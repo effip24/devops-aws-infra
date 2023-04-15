@@ -9,21 +9,6 @@ metadata:
     {{- include .annotations }}
   {{- end }}
 spec:
-  destination:
-    namespace: {{ .namespace }}
-    server: {{ .cluster }}
-  source:
-    path: {{ .path }}
-    repoURL: {{ .repoURL }}
-    helm:
-      {{- if .valueFiles }}
-      valueFiles:
-        {{- range .valueFiles }}
-        - {{ . }}
-        {{- end }}
-      {{- end }}    
-    targetRevision: HEAD
-  project: {{ .project }}
   generators:
     - list:      
       elements:
