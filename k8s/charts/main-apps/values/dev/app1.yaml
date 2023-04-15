@@ -5,14 +5,14 @@
 replicaCount: 1
 
 image:
-  repository: nginx:latest
+  repository: nginx
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: "latest"
 
 imagePullSecrets: []
-nameOverride: "nginx-app2-dev-dev"
-fullnameOverride: "nginx-app2-dev-dev"
+nameOverride: "nginx-app2-dev"
+fullnameOverride: "nginx-app2-dev"
 
 serviceAccount:
   # Specifies whether a service account should be created
@@ -39,7 +39,7 @@ securityContext:
   # runAsUser: 1000
 
 service:
-  type: LoadBalancer
+  type: NodePort
   port: 9093
   targetPort: 3000
 
