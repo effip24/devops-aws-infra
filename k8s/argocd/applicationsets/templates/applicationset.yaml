@@ -15,6 +15,13 @@ spec:
   source:
     path: {{ .path }}
     repoURL: {{ .repoURL }}
+    helm:
+      {{- if .valueFiles }}
+      valueFiles:
+        {{- range .valueFiles }}
+        - {{ . }}
+        {{- end }}
+      {{- end }}    
     targetRevision: HEAD
   project: {{ .project }}
   generators:
