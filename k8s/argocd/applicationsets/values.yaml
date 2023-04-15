@@ -1,7 +1,8 @@
 applicationsets:
   - name: root-dev
     namespace: dev
-    cluster: https://kubernetes.default.svc
+    clusters:
+      - https://kubernetes.default.svc
     project: default
     repoURL: https://github.com/effip24/devops-aws-infra.git
     path: k8s/charts/main-apps/

@@ -12,7 +12,9 @@ spec:
   generators:
   - list:
       elements:
-      - cluster: {{ .cluster }}
+      {{- range .clusters }}        
+        - {{ . }}
+      {{- end }}
   template:
     metadata:
       name: {{ .name }}
@@ -31,7 +33,7 @@ spec:
             {{- end }}
           {{- end }}
       destination:
-        server: {{ .cluster }}
+        server: {{cluster}}
         namespace: {{ .namespace }}
       syncPolicy:
         automated:
