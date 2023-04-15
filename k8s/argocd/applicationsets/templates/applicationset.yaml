@@ -1,4 +1,5 @@
 {{- range .Values.applicationsets }}
+---
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
