@@ -9,6 +9,10 @@ metadata:
     {{- include .annotations }}
   {{- end }}
 spec:
+  generators:
+  - list:
+      elements:
+      - cluster: {{ .cluster }}
   template:
     metadata:
       name: {{ .name }}
