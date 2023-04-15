@@ -1,10 +1,10 @@
 applicationsets:
-  - name: flags
+  - name: root-dev
     namespace: dev
     cluster: https://kubernetes.default.svc
     project: default
     repoURL: https://github.com/effip24/devops-aws-infra.git
-    path: k8s/charts/main-app/
+    path: k8s/charts/main-apps/
     valueFiles:
       - values/dev/app1.yaml
       - values/dev/app2.yaml

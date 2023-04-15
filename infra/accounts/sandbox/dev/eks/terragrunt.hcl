@@ -36,8 +36,8 @@ inputs = {
       name = "${local.environment}node-group-1"
       instance_types = ["t2.micro"]
       min_size     = 1
-      max_size     = 3
-      desired_size = 2
+      max_size     = 10
+      desired_size = 7
     }
   }
   create_aws_auth_configmap = true

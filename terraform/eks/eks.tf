@@ -8,8 +8,7 @@ module "eks" {
   cluster_endpoint_public_access  = var.cluster_endpoint_public_access
   eks_managed_node_group_defaults = var.eks_managed_node_group_defaults
   eks_managed_node_groups         = var.eks_managed_node_groups
-  # create_aws_auth_configmap       = var.create_aws_auth_configmap
-  manage_aws_auth_configmap = var.manage_aws_auth_configmap
+  manage_aws_auth_configmap       = var.manage_aws_auth_configmap
 
   aws_auth_roles = [
     {
