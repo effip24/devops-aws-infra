@@ -16,18 +16,11 @@ spec:
     path: {{ .path }}
     repoURL: {{ .repoURL }}
     targetRevision: HEAD
-    helm:
-      {{- if .valueFiles }}
-      valueFiles:
-        {{- range .valueFiles }}
-        - {{ . }}
-        {{- end }}
-      {{- end }}    
   project: {{ .project }}
   generators:
-    - list:
-        elements:
-          - cluster: {{ .cluster }}
+    - list:      
+      elements:
+        - cluster: {{ .cluster }}
   template:
     metadata:
       name: {{ .name }}
@@ -38,14 +31,20 @@ spec:
         repoURL: {{ .repoURL }}
         targetRevision: HEAD
         path: {{ .path }}
-
+        helm:
+          {{- if .valueFiles }}
+          valueFiles:
+            {{- range .valueFiles }}
+            - {{ . }}
+            {{- end }}
+          {{- end }}
       destination:
         server: {{ .cluster }}
         namespace: {{ .namespace }}
-  syncPolicy:
-    automated:
-      selfHeal: true
-      prune: true
-    syncOptions:
-      - CreateNamespace=true
+      syncPolicy:
+        automated:
+          selfHeal: true
+          prune: true
+        syncOptions:
+          - CreateNamespace=true
 {{- end }}
