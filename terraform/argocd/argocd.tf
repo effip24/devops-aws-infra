@@ -18,7 +18,5 @@ resource "helm_release" "argocd" {
     name  = "server.service.type"
     value = "NodePort"
   }
-  values = [
-    file("/Users/effiphil/Desktop/Projects/devops-aws-infra/infra/../k8s/argocd/apps/main.yaml")
-  ]
+  values = var.argocd_values
 }
