@@ -23,5 +23,5 @@ applicationsets:
     namespace: dev
     cluster: https://kubernetes.default.svc
     project: default
-    repoURL: https://github.com/kubernetes-sigs/metrics-server.git
+    repoURL: https://kubernetes-sigs.github.io/metrics-server/
     targetRevision: "v0.3.7"
