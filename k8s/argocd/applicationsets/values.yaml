@@ -20,7 +20,7 @@ applicationsets:
       - values/dev/app2.yaml
 
   - name: metrics-server
-    namespace: dev
+    namespace: kube-system
     cluster: https://kubernetes.default.svc
     project: default
     chart: metrics-server
