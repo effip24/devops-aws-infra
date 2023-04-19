@@ -21,6 +21,9 @@ spec:
     spec:
       project: {{ .project }}
       source:
+        {{- if .chart }}
+        chart: {{ .chart }}
+        {{- end }}
         repoURL: {{ .repoURL }}
         targetRevision: {{ .targetRevision }}
         {{- if .path }}
