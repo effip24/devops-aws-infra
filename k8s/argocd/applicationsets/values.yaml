@@ -1,5 +1,5 @@
 applicationsets:
-  - name: nginx1
+  - name: nginx1-dev
     namespace: dev
     cluster: https://kubernetes.default.svc
     project: default
@@ -9,7 +9,7 @@ applicationsets:
     valueFiles:
       - values/dev/app1.yaml
 
-  - name: nginx2
+  - name: nginx2-dev
     namespace: dev
     cluster: https://kubernetes.default.svc
     project: default
@@ -19,7 +19,7 @@ applicationsets:
     valueFiles:
       - values/dev/app2.yaml
 
-  - name: metrics-server
+  - name: metrics-server-dev
     namespace: kube-system
     cluster: https://kubernetes.default.svc
     project: default

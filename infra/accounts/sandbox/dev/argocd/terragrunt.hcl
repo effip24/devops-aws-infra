@@ -31,7 +31,7 @@ inputs = {
     apiVersion = "argoproj.io/v1alpha1"
     kind       = "Application"
     metadata   = {
-      name      = "root-app"
+      name      = "root-apps-${local.environment}"
       namespace = "argocd"
     }
     spec       = {
