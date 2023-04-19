@@ -23,6 +23,9 @@ applicationsets:
     namespace: kube-system
     cluster: https://kubernetes.default.svc
     project: default
+    parameters:
+      - name: replicas
+        value: "2"
     chart: metrics-server
     repoURL: https://kubernetes-sigs.github.io/metrics-server/
     targetRevision: "3.10.0"

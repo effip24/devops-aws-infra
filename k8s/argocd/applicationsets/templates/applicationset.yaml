@@ -30,6 +30,13 @@ spec:
         path: {{ .path }}
         {{- end }}
         helm:
+          {{- if .parameters }}
+          parameters:
+            {{- range .parameters }}
+            - name: {{ .name }}
+              value: {{ .value }}
+            {{- end }}          
+          {{- end }}
           {{- if .valueFiles }}
           valueFiles:
             {{- range .valueFiles }}
