@@ -6,6 +6,13 @@ provider "helm" {
   }
 }
 
+provider "kubernetes" {
+  host                   = data.aws_eks_cluster.cluster.endpoint
+  cluster_ca_certificate = base64decode(data.aws_eks_cluster.cluster.certificate_authority.0.data)
+  token                  = data.aws_eks_cluster_auth.cluster.token
+}
+
+
 resource "helm_release" "argocd" {
   name             = var.namespace
   namespace        = var.namespace
@@ -18,5 +25,10 @@ resource "helm_release" "argocd" {
     name  = "server.service.type"
     value = "NodePort"
   }
-  values = var.argocd_values
+}
+
+resource "kubernetes_manifest" "argocd_app" {
+  depends_on = [helm_release.argocd]
+
+  manifest = var.root_app_manifest
 }

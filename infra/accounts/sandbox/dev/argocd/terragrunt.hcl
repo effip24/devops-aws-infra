@@ -27,5 +27,33 @@ inputs = {
   argocd_repo = "https://argoproj.github.io/argo-helm"
   argocd_chart = "argo-cd"
   argocd_version = "5.29.1"
-  argocd_values = [file("${get_parent_terragrunt_dir()}/../k8s/argocd/apps/main.yaml")]
+  root_app_manifest = {
+    apiVersion = "argoproj.io/v1alpha1"
+    kind       = "Application"
+    metadata   = {
+      name      = "root-app"
+      namespace = "argocd"
+    }
+    spec       = {
+      destination = {
+        namespace = "argocd"
+        server    = "https://kubernetes.default.svc"
+      }
+      source      = {
+        path           = "k8s/argocd/applicationsets"
+        repoURL        = "https://github.com/effip24/devops-aws-infra.git"
+        targetRevision = "main"
+      }
+      project     = "default"
+      syncPolicy  = {
+        automated = {
+          selfHeal = true
+          prune    = true
+        }
+        syncOptions = [
+          "CreateNamespace=true",
+        ]
+      }
+    }
+  }
 }
