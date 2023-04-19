@@ -34,7 +34,7 @@ spec:
           parameters:
             {{- range .parameters }}
             - name: {{ .name }}
-              value: {{ .value }}
+              value: "{{ .value }}"
             {{- end }}          
           {{- end }}
           {{- if .valueFiles }}
