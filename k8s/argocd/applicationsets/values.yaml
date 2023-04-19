@@ -4,6 +4,7 @@ applicationsets:
     cluster: https://kubernetes.default.svc
     project: default
     repoURL: https://github.com/effip24/devops-aws-infra.git
+    targetRevision: main
     path: k8s/charts/main-apps/
     valueFiles:
       - values/dev/app1.yaml
@@ -13,6 +14,14 @@ applicationsets:
     cluster: https://kubernetes.default.svc
     project: default
     repoURL: https://github.com/effip24/devops-aws-infra.git
+    targetRevision: main
     path: k8s/charts/main-apps/
     valueFiles:
-      - values/dev/app2.yaml      
+      - values/dev/app2.yaml
+
+  - name: metrics-server
+    namespace: dev
+    cluster: https://kubernetes.default.svc
+    project: default
+    repoURL: metrics-server/metrics-server
+    targetRevision: "v0.3.7"

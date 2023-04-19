@@ -22,7 +22,7 @@ spec:
       project: {{ .project }}
       source:
         repoURL: {{ .repoURL }}
-        targetRevision: HEAD
+        targetRevision: {{ .targetRevision }}
         path: {{ .path }}
         helm:
           {{- if .valueFiles }}
