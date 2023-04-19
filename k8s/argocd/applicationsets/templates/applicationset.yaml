@@ -23,7 +23,9 @@ spec:
       source:
         repoURL: {{ .repoURL }}
         targetRevision: {{ .targetRevision }}
+        {{- if .path }}
         path: {{ .path }}
+        {{- end }}
         helm:
           {{- if .valueFiles }}
           valueFiles:
