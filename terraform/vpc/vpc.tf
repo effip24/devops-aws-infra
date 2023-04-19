@@ -13,4 +13,13 @@ module "vpc" {
   enable_nat_gateway   = var.vpc_enable_nat
   single_nat_gateway   = var.vpc_single_nat
   enable_dns_hostnames = var.vpc_enable_dns_hostname
+
+  public_subnet_tags = {
+    "kubernetes.io/role/elb" = 1
+  }
+
+  private_subnet_tags = {
+    "kubernetes.io/role/internal-elb" = 1
+    "karpenter.sh/discovery" = "true"
+  }
 }

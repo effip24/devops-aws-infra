@@ -31,13 +31,23 @@ inputs = {
   eks_managed_node_group_defaults = {
     ami_type = "AL2_x86_64"
   }
+  node_security_group_additional_rules = {
+    ingress_nodes_karpenter_port = {
+      description                   = "Cluster API to Node group for Karpenter webhook"
+      protocol                      = "tcp"
+      from_port                     = 8443
+      to_port                       = 8443
+      type                          = "ingress"
+      source_cluster_security_group = true
+    }
+  }
   eks_managed_node_groups = {
-    one = {
-      name = "${local.environment}node-group-1"
+    initial = {
       instance_types = ["t2.micro"]
-      min_size     = 1
-      max_size     = 10
-      desired_size = 7
+      create_security_group = false
+      min_size     = 2
+      max_size     = 3
+      desired_size = 2
     }
   }
   create_aws_auth_configmap = true
