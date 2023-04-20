@@ -9,9 +9,7 @@ module "eks" {
   eks_managed_node_group_defaults = var.eks_managed_node_group_defaults
   eks_managed_node_groups         = var.eks_managed_node_groups
   manage_aws_auth_configmap       = var.manage_aws_auth_configmap
-  enable_irsa = true
-
-   node_security_group_additional_rules = var.node_security_group_additional_rules
+  enable_irsa                     = true
 
   aws_auth_roles = [
     {
@@ -19,17 +17,17 @@ module "eks" {
       rolearn  = aws_iam_role.eks_admin_role.arn
       username = "eks-admin"
     },
+    {
+      rolearn  = module.karpenter.role_arn
+      username = "system:node:{{EC2PrivateDNSName}}"
+      groups = [
+        "system:bootstrappers",
+        "system:nodes",
+      ]
+    },
   ]
 
-  node_security_group_tags = {
-    "karpenter.sh/discovery" = var.eks_cluster_name
-  }
+  node_security_group_tags = var.node_security_group_tags
 
   tags = var.tags
-}
-
-provider "kubernetes" {
-  host                   = module.eks.cluster_endpoint
-  cluster_ca_certificate = base64decode(module.eks.cluster_certificate_authority_data)
-  token                  = data.aws_eks_cluster_auth.eks_auth.token
 }

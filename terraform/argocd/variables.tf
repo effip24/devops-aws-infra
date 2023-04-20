@@ -18,7 +18,6 @@ variable "argocd_version" {
   type = string
 }
 
-
 variable "root_app_manifest" {
   type = any
 }
