@@ -73,7 +73,7 @@ module "iam_lb_controller_role" {
   oidc_providers = {
     one = {
       provider_arn               = module.eks.oidc_provider_arn
-      namespace_service_accounts = ["kube-system:load-balancer-controller"]
+      namespace_service_accounts = ["kube-system:load-balancer-controller-aws-load-balancer-controller"]
     }
   }
 }

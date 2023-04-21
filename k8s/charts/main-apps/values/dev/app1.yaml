@@ -49,7 +49,7 @@ ingress:
   className: ""
   annotations:
     kubernetes.io/ingress.class: alb
-    external-dns.alpha.kubernetes.io/hostname: nginx1.cmcloudlab879.info
+    external-dns.alpha.kubernetes.io/hostname: nginx-app1-dev.nginx1.cmcloudlab879.info
   hosts:
     - host: nginx1.cmcloudlab879.info
       paths:
