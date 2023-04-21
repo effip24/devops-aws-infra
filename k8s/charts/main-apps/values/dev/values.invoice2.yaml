@@ -11,8 +11,8 @@ image:
   tag: "latest"
 
 imagePullSecrets: []
-nameOverride: "invoice2-app2-dev"
-fullnameOverride: "invoice2-app2-dev"
+nameOverride: "invoice2-dev"
+fullnameOverride: "invoice2-dev"
 command: |
   ["npm"]
 args: |
@@ -48,7 +48,7 @@ service:
   type: NodePort
   port: 80
   targetPort: 3000
-  name: invoice2-app2-dev
+  name: invoice2-dev
 
 ingress:
   enabled: true
@@ -61,12 +61,12 @@ ingress:
       paths:
         - path: /
           pathType: Prefix
-          serviceName: nginx-app2-dev
+          serviceName: invoice2-dev
           port: 80
   tls:
     - hosts:
         - "invoice2.cmcloudlab1745.info"
-      secretName: invoice2-app2-dev
+      secretName: invoice2-dev
 
 resources:
   {}
