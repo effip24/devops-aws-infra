@@ -1,12 +1,9 @@
+# eks mian vars -------------
 variable "eks_cluster_name" {
   type = string
 }
 
 variable "account_id" {
-  type = string
-}
-
-variable "region" {
   type = string
 }
 
@@ -54,15 +51,12 @@ variable "node_security_group_tags" {
   type = any
 }
 
-variable "domain" {
-  type = string
-}
-
 variable "is_domain_private_zone" {
   type    = bool
   default = false
 }
 
+# karpenter main vars -------------
 variable "karpenter_chart_repo" {
   type = string
 }
@@ -75,6 +69,7 @@ variable "karpenter_chart_version" {
   type = string
 }
 
+# external-dns main vars -------------
 variable "external_dns_chart_repo" {
   type = string
 }
@@ -91,10 +86,19 @@ variable "external_dns_provider" {
   type = string
 }
 
+variable "external_dns_aws_region" {
+  type = string
+}
+
 variable "external_dns_source" {
   type = string
 }
 
+variable "external_dns_domain_filter" {
+  type = string
+}
+
+# load-balancer-controller main vars -------------
 variable "lb_controller_chart_repo" {
   type = string
 }
@@ -104,5 +108,42 @@ variable "lb_controller_chart_name" {
 }
 
 variable "lb_controller_chart_version" {
+  type = string
+}
+
+# argocd main vars -------------
+variable "argocd_namespace" {
+  type = string
+}
+
+variable "argocd_repo" {
+  type = string
+}
+
+variable "argocd_chart" {
+  type = string
+}
+
+variable "argocd_version" {
+  type = string
+}
+
+variable "argocd_root_app_name" {
+  type = string
+}
+
+variable "argocd_root_app_repo" {
+  type = string
+}
+
+variable "argocd_root_app_path" {
+  type = string
+}
+
+variable "argocd_root_app_targetRevision" {
+  type = string
+}
+
+variable "argocd__root_app_project" {
   type = string
 }

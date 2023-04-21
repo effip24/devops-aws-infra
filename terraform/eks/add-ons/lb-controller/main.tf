@@ -1,6 +1,6 @@
 resource "helm_release" "lb-controller" {
   depends_on = [
-    module.eks, module.iam_lb_controller_role
+    module.iam_lb_controller_role
   ]
   namespace        = "kube-system"
   create_namespace = true
@@ -12,7 +12,7 @@ resource "helm_release" "lb-controller" {
 
   set {
     name  = "clusterName"
-    value = module.eks.cluster_name
+    value = var.eks_cluster_name
   }
 
   set {

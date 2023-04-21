@@ -18,7 +18,7 @@ module "eks" {
       username = "eks-admin"
     },
     {
-      rolearn  = module.karpenter.role_arn
+      rolearn  = module.karpenter.karpenter_role_arn
       username = "system:node:{{EC2PrivateDNSName}}"
       groups = [
         "system:bootstrappers",
@@ -30,4 +30,67 @@ module "eks" {
   node_security_group_tags = var.node_security_group_tags
 
   tags = var.tags
+}
+
+
+module "karpenter" {
+  source                                     = "./add-ons/karpenter"
+  eks_cluster_name                           = module.eks.cluster_name
+  oidc_provider_arn                          = module.eks.oidc_provider_arn
+  eks_cluster_endpoint                       = module.eks.cluster_endpoint
+  eks_cluster_certificate_authority_data     = module.eks.cluster_certificate_authority_data
+  aws_ecrpublic_authorization_token_username = data.aws_ecrpublic_authorization_token.token.user_name
+  aws_ecrpublic_authorization_token_password = data.aws_ecrpublic_authorization_token.token.password
+  karpenter_chart_name                       = var.karpenter_chart_name
+  karpenter_chart_repo                       = var.karpenter_chart_repo
+  karpenter_chart_version                    = var.karpenter_chart_version
+  karpenter_tags                             = var.tags
+}
+
+module "external-dns" {
+  source                                 = "./add-ons/external-dns"
+  eks_cluster_name                       = module.eks.cluster_name
+  oidc_provider_arn                      = module.eks.oidc_provider_arn
+  eks_cluster_endpoint                   = module.eks.cluster_endpoint
+  eks_cluster_certificate_authority_data = module.eks.cluster_certificate_authority_data
+  external_dns_chart_repo                = var.external_dns_chart_repo
+  external_dns_chart_name                = var.external_dns_chart_name
+  external_dns_chart_version             = var.external_dns_chart_version
+  external_dns_provider                  = var.external_dns_provider
+  external_dns_aws_region                = var.external_dns_aws_region
+  external_dns_source                    = var.external_dns_source
+  external_dns_domain_filter             = var.external_dns_domain_filter
+  is_domain_private_zone                 = var.is_domain_private_zone
+  aws_route53_zone_id                    = data.aws_route53_zone.domain.zone_id
+}
+
+module "lb-controller" {
+  source                                 = "./add-ons/lb-controller"
+  eks_cluster_name                       = module.eks.cluster_name
+  oidc_provider_arn                      = module.eks.oidc_provider_arn
+  eks_cluster_endpoint                   = module.eks.cluster_endpoint
+  eks_cluster_certificate_authority_data = module.eks.cluster_certificate_authority_data
+  lb_controller_chart_repo               = var.lb_controller_chart_repo
+  lb_controller_chart_name               = var.lb_controller_chart_name
+  lb_controller_chart_version            = var.lb_controller_chart_version
+}
+
+module "argocd" {
+  source                                 = "./add-ons/argocd"
+  eks_cluster_name                       = module.eks.cluster_name
+  oidc_provider_arn                      = module.eks.oidc_provider_arn
+  eks_cluster_endpoint                   = module.eks.cluster_endpoint
+  eks_cluster_certificate_authority_data = module.eks.cluster_certificate_authority_data
+  argocd_namespace                       = var.argocd_namespace
+  argocd_repo                            = var.argocd_repo
+  argocd_chart                           = var.argocd_chart
+  argocd_version                         = var.argocd_version
+  argocd_root_app_name                   = var.argocd_root_app_name
+  argocd_root_app_repo                   = var.argocd_root_app_repo
+  argocd_root_app_path                   = var.argocd_root_app_path
+  argocd_root_app_targetRevision         = var.argocd_root_app_targetRevision
+  argocd__root_app_project               = var.argocd__root_app_project
+  kapenter_created                       = module.karpenter.created
+  external_dns_created                   = module.external-dns.created
+  lb_controller_created                  = module.lb-controller.created
 }

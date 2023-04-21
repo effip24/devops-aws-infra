@@ -44,7 +44,7 @@ securityContext:
 
 service:
   annotations:
-    external-dns.alpha.kubernetes.io/hostname: invoice1.cmcloudlab1745.info
+    external-dns.alpha.kubernetes.io/hostname: invoice1.cmcloudlab319.info
   type: NodePort
   port: 80
   targetPort: 3000
@@ -58,7 +58,7 @@ ingress:
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/group.name: dev
   hosts:
-    - host: invoice1.cmcloudlab1745.info
+    - host: invoice1.cmcloudlab319.info
       paths:
         - path: /
           pathType: Prefix
@@ -66,7 +66,7 @@ ingress:
           port: 80
   tls:
     - hosts:
-        - "invoice1.cmcloudlab1745.info"
+        - "invoice1.cmcloudlab319.info"
       secretName: invoice1-dev
 
 resources:

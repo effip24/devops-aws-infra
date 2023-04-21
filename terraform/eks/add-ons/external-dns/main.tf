@@ -1,6 +1,6 @@
 resource "helm_release" "external-dns" {
   depends_on = [
-    module.eks, module.iam_external_dns_role
+    module.iam_external_dns_role
   ]
   namespace        = "kube-system"
   create_namespace = true
@@ -17,7 +17,7 @@ resource "helm_release" "external-dns" {
 
   set {
     name  = "aws.region"
-    value = var.region
+    value = var.external_dns_aws_region
   }
 
   set {
@@ -37,7 +37,7 @@ resource "helm_release" "external-dns" {
 
   set {
     name  = "domain-filter"
-    value = var.domain
+    value = var.external_dns_domain_filter
   }
 
   set {
@@ -57,6 +57,6 @@ resource "helm_release" "external-dns" {
 
   set {
     name  = "txt-owner-id"
-    value = data.aws_route53_zone.domain.zone_id
+    value = var.aws_route53_zone_id
   }
 }

@@ -1,12 +1,12 @@
 module "karpenter" {
   source = "terraform-aws-modules/eks/aws//modules/karpenter"
 
-  cluster_name = module.eks.cluster_name
+  cluster_name = var.eks_cluster_name
 
-  irsa_oidc_provider_arn          = module.eks.oidc_provider_arn
+  irsa_oidc_provider_arn          = var.oidc_provider_arn
   irsa_namespace_service_accounts = ["karpenter:karpenter"]
 
-  tags = var.tags
+  tags = var.karpenter_tags
 }
 
 resource "helm_release" "karpenter" {
@@ -15,19 +15,19 @@ resource "helm_release" "karpenter" {
 
   name                = "karpenter"
   repository          = var.karpenter_chart_repo
-  repository_username = data.aws_ecrpublic_authorization_token.token.user_name
-  repository_password = data.aws_ecrpublic_authorization_token.token.password
+  repository_username = var.aws_ecrpublic_authorization_token_username
+  repository_password = var.aws_ecrpublic_authorization_token_password
   chart               = var.karpenter_chart_name
   version             = var.karpenter_chart_version
 
   set {
     name  = "settings.aws.clusterName"
-    value = module.eks.cluster_name
+    value = var.eks_cluster_name
   }
 
   set {
     name  = "settings.aws.clusterEndpoint"
-    value = module.eks.cluster_endpoint
+    value = var.eks_cluster_endpoint
   }
 
   set {
