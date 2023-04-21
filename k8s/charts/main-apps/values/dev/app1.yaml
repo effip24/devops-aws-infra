@@ -45,7 +45,7 @@ securityContext:
 service:
   annotations:
     external-dns.alpha.kubernetes.io/hostname: nginx1.cmcloudlab1745.info
-  type: ClusterIP
+  type: NodePort
   port: 80
   targetPort: 3000
   name: nginx-app1-dev
