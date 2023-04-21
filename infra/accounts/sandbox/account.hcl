@@ -1,8 +1,8 @@
 locals {
   account_name   = "sandbox"
-  aws_account_id = "251414772678"
+  aws_account_id = "460798405032"
   name           = "sandbox"
   environment    = "dev"
-  state_bucket   = "dev-sandbox-infratestproj" 
-  dynamodb_table = "dev-sandbox-infratestproj"
+  state_bucket   = "dev-sandbox-infratestprojtest" 
+  dynamodb_table = "dev-sandbox-infratestprojtest"
 }

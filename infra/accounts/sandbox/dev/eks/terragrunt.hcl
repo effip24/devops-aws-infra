@@ -37,7 +37,7 @@ inputs = {
   vpc_id = dependency.vpc.outputs.vpc_id
   vpc_private_subnets = dependency.vpc.outputs.vpc_private_subnets
 
-  domain = "cmcloudlab879.info."
+  domain = "cmcloudlab1745.info"
   is_domain_private_zone = false
 
   karpenter_chart_repo = "oci://public.ecr.aws/karpenter"

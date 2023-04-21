@@ -1,8 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
+  {{- if .Values.service.name }}
   name: {{ .Values.service.name }}
-  labels: {{ - include "my-charts.labels" . | nindent 4 }}
+  {{ else }}
+  name: {{ include "my-charts.fullname" . }}
+  {{- end }}
+  labels:
+    {{- include "my-charts.labels" . | nindent 4 }}
 spec:
   type: {{ .Values.service.type }}
   ports:
@@ -14,4 +19,5 @@ spec:
       {{ else }}
       name: http
       {{- end }}
-  selector: {{ - include "my-charts.selectorLabels" . | nindent 4 }}
+  selector:
+    {{- include "my-charts.selectorLabels" . | nindent 4 }}
