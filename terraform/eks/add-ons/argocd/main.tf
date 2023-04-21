@@ -6,10 +6,30 @@ resource "helm_release" "argocd" {
   version          = var.argocd_version
   create_namespace = true
 
-  set {
-    name  = "server.service.type"
-    value = "NodePort"
-  }
+  values = [
+    <<EOF
+    server:
+      config:
+        url: http://argocd.${var.external_dns_domain_filter}
+      service:
+        type: NodePort
+        port: 80
+        targetPort: 8080
+        annotations:
+          external-dns.alpha.kubernetes.io/hostname: argocd.${var.external_dns_domain_filter}
+      ingress:
+        enabled: true
+        hosts: ["argocd.${var.external_dns_domain_filter}"]
+        tls:
+          - hosts:
+              - argocd.${var.external_dns_domain_filter}
+            secretName: argocd-secret
+        annotations:
+          kubernetes.io/ingress.class: alb
+          alb.ingress.kubernetes.io/scheme: internet-facing
+          alb.ingress.kubernetes.io/group.name: dev
+    EOF
+  ]
 }
 
 resource "kubectl_manifest" "argocd_root_app_template" {

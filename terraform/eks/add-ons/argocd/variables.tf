@@ -14,6 +14,10 @@ variable "eks_cluster_certificate_authority_data" {
   type = any
 }
 
+variable "environment" {
+  type = string
+}
+
 variable "argocd_namespace" {
   type = string
 }
@@ -60,4 +64,8 @@ variable "external_dns_created" {
 
 variable "lb_controller_created" {
   type = bool
+}
+
+variable "external_dns_domain_filter" {
+  type = string
 }

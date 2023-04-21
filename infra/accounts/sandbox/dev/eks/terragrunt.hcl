@@ -30,7 +30,7 @@ inputs = {
   create_aws_auth_configmap = true
   manage_aws_auth_configmap = true
   eks_admin_role_name = "eks-admin-role"
-
+  environment = local.environment
   account_id = local.account_id
 
   vpc_id = dependency.vpc.outputs.vpc_id

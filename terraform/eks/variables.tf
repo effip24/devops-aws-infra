@@ -11,6 +11,10 @@ variable "eks_cluster_version" {
   type = string
 }
 
+variable "environment" {
+  type = string
+}
+
 variable "vpc_id" {
   type = string
 }

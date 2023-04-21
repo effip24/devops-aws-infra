@@ -81,6 +81,7 @@ module "argocd" {
   oidc_provider_arn                      = module.eks.oidc_provider_arn
   eks_cluster_endpoint                   = module.eks.cluster_endpoint
   eks_cluster_certificate_authority_data = module.eks.cluster_certificate_authority_data
+  environment                            = var.environment
   argocd_namespace                       = var.argocd_namespace
   argocd_repo                            = var.argocd_repo
   argocd_chart                           = var.argocd_chart
@@ -93,4 +94,5 @@ module "argocd" {
   kapenter_created                       = module.karpenter.created
   external_dns_created                   = module.external-dns.created
   lb_controller_created                  = module.lb-controller.created
+  external_dns_domain_filter             = var.external_dns_domain_filter
 }
