@@ -56,8 +56,8 @@ ingress:
       paths:
         - path: /
           pathType: Prefix
-          serviceName: ding-file-creator
-          port: 443
+          serviceName: nginx-app1-dev
+          port: 80
   tls:
     - hosts:
         - "nginx1.cmcloudlab1745.info"
