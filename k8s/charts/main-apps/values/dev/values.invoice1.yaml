@@ -46,7 +46,7 @@ service:
   annotations:
     external-dns.alpha.kubernetes.io/hostname: invoice1.cmcloudlab319.info
   type: NodePort
-  port: 80
+  port: 443
   targetPort: 3000
   name: invoice1-dev
 
@@ -63,7 +63,7 @@ ingress:
         - path: /
           pathType: Prefix
           serviceName: invoice1-dev
-          port: 80
+          port: 443
   tls:
     - hosts:
         - "invoice1.cmcloudlab319.info"
