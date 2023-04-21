@@ -45,6 +45,9 @@ securityContext:
 service:
   annotations:
     external-dns.alpha.kubernetes.io/hostname: invoice2.cmcloudlab319.info
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:753873909731:certificate/6ecde838-023b-4ca8-a5b9-60c1712eb288
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS":443}]'
+    alb.ingress.kubernetes.io/actions.ssl-redirect: '{"Type": "redirect", "RedirectConfig": { "Protocol": "HTTPS", "Port": "443", "StatusCode": "HTTP_301"}}'
   type: NodePort
   port: 443
   targetPort: 3000
