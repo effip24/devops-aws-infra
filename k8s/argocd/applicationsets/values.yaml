@@ -1,5 +1,5 @@
 applicationsets:
-  - name: nginx1-dev
+  - name: invoice1-dev
     namespace: dev
     cluster: https://kubernetes.default.svc
     project: default
@@ -9,7 +9,7 @@ applicationsets:
     valueFiles:
       - values.invoice1.yaml
 
-  - name: nginx2-dev
+  - name: invoice2-dev
     namespace: dev
     cluster: https://kubernetes.default.svc
     project: default
