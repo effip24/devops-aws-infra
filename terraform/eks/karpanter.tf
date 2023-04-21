@@ -14,11 +14,11 @@ resource "helm_release" "karpenter" {
   create_namespace = true
 
   name                = "karpenter"
-  repository          = "oci://public.ecr.aws/karpenter"
+  repository          = var.karpenter_chart_repo
   repository_username = data.aws_ecrpublic_authorization_token.token.user_name
   repository_password = data.aws_ecrpublic_authorization_token.token.password
-  chart               = "karpenter"
-  version             = "v0.27.3"
+  chart               = var.karpenter_chart_name
+  version             = var.karpenter_chart_version
 
   set {
     name  = "settings.aws.clusterName"

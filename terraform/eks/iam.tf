@@ -1,4 +1,4 @@
-
+# Admin role, policy and group ----------
 resource "aws_iam_role" "eks_admin_role" {
   name        = "eks-admin-role"
   description = "Role for managing EKS clusters"
@@ -17,37 +17,6 @@ resource "aws_iam_role" "eks_admin_role" {
     }
   )
 }
-
-resource "aws_iam_group" "eks_admin_group" {
-  name = "eks-admin-group"
-}
-
-data "aws_iam_policy_document" "eks_admin_policy" {
-  statement {
-    effect = "Allow"
-    actions = [
-      "eks:Describe*",
-      "eks:List*",
-      "eks:Get*",
-      "eks:Update*",
-      "eks:Create*",
-      "eks:Delete*",
-      "eks:TagResource",
-      "eks:UntagResource",
-    ]
-    resources = ["*"]
-    principals {
-      type        = "AWS"
-      identifiers = [aws_iam_group.eks_admin_group.arn]
-    }
-  }
-}
-
-resource "aws_iam_role_policy_attachment" "eks_admin_policy_attachment" {
-  policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
-  role       = aws_iam_role.eks_admin_role.name
-}
-
 resource "aws_iam_policy" "eks_admin_assume_role_policy" {
   name = "eks-admin-assume-role-policy"
   policy = jsonencode({
@@ -66,9 +35,45 @@ resource "aws_iam_policy" "eks_admin_assume_role_policy" {
     ]
   })
 }
-
+resource "aws_iam_group" "eks_admin_group" {
+  name = "eks-admin-group"
+}
+resource "aws_iam_role_policy_attachment" "eks_admin_policy_attachment" {
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
+  role       = aws_iam_role.eks_admin_role.name
+}
 resource "aws_iam_policy_attachment" "eks_admin_assume_role_policy_attachment" {
   name       = "eks-admin-assume-role-policy-attachment"
   policy_arn = aws_iam_policy.eks_admin_assume_role_policy.arn
   groups     = [aws_iam_group.eks_admin_group.name]
+}
+
+# external-dns --------------
+module "iam_external_dns_role" {
+  source    = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts-eks"
+  role_name = "external-dns-role"
+
+  attach_external_dns_policy = true
+
+  oidc_providers = {
+    one = {
+      provider_arn               = module.eks.oidc_provider_arn
+      namespace_service_accounts = ["kube-system:external-dns"]
+    }
+  }
+}
+
+# lb-controller --------------
+module "iam_lb_controller_role" {
+  source    = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts-eks"
+  role_name = "load-balancer-controller-role"
+
+  attach_load_balancer_controller_policy = true
+
+  oidc_providers = {
+    one = {
+      provider_arn               = module.eks.oidc_provider_arn
+      namespace_service_accounts = ["kube-system:load-balancer-controller"]
+    }
+  }
 }

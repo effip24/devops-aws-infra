@@ -5,6 +5,7 @@ include "root" {
 locals {
   base_source = "${dirname(find_in_parent_folders())}/..//terraform/eks"
   account_vars = read_terragrunt_config(find_in_parent_folders("account.hcl"))
+  region = read_terragrunt_config(find_in_parent_folders("region.hcl")).locals.aws_region
   environment = local.account_vars.locals.environment
   account_id = local.account_vars.locals.aws_account_id
   account_name = local.account_vars.locals.account_name
@@ -25,13 +26,33 @@ terraform {
 inputs = {
   eks_cluster_name = "${local.account_name}-${local.environment}-eks"
   eks_cluster_version = "1.24"
-  account_id = local.account_id
-  vpc_id = dependency.vpc.outputs.vpc_id
-  vpc_private_subnets = dependency.vpc.outputs.vpc_private_subnets
   cluster_endpoint_public_access = true
   create_aws_auth_configmap = true
   manage_aws_auth_configmap = true
   eks_admin_role_name = "eks-admin-role"
+
+  account_id = local.account_id
+  region = local.region
+
+  vpc_id = dependency.vpc.outputs.vpc_id
+  vpc_private_subnets = dependency.vpc.outputs.vpc_private_subnets
+
+  domain = "cmcloudlab879.info."
+  is_domain_private_zone = false
+
+  karpenter_chart_repo = "oci://public.ecr.aws/karpenter"
+  karpenter_chart_name = "karpenter"
+  karpenter_chart_version = "v0.27.3"
+
+  external_dns_chart_repo = "https://kubernetes-sigs.github.io/external-dns/"
+  external_dns_chart_name = "external-dns"
+  external_dns_chart_version = "1.12.2"
+  external_dns_provider = "aws"
+  external_dns_source = "ingress"
+
+  lb_controller_chart_repo = "https://aws.github.io/eks-charts"
+  lb_controller_chart_name = "aws-load-balancer-controller"
+  lb_controller_chart_version = "1.5.2"
 
   eks_managed_node_group_defaults = {
     ami_type = "AL2_x86_64"
