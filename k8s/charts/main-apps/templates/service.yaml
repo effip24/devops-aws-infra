@@ -6,6 +6,12 @@ metadata:
   {{ else }}
   name: {{ include "my-charts.fullname" . }}
   {{- end }}
+  {{- if .Values.service.annotations }}
+  annotations:    
+    {{- with .Values.service.annotations }}
+    {{- toYaml . }}
+    {{- end }}
+  {{- end }}
   labels:
     {{- include "my-charts.labels" . | nindent 4 }}
 spec:
