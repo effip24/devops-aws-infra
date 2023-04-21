@@ -5,10 +5,10 @@
 replicaCount: 1
 
 image:
-  repository: nginx
+  repository: public.ecr.aws/lambda/nodejs
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "latest"
+  tag: "12"
 
 imagePullSecrets: []
 nameOverride: "nginx-app1-dev"
@@ -43,7 +43,7 @@ service:
     external-dns.alpha.kubernetes.io/hostname: nginx1.cmcloudlab1745.info
   type: NodePort
   port: 80
-  targetPort: 80
+  targetPort: 8080
   name: nginx-app1-dev
 
 ingress:
