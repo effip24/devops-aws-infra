@@ -5,16 +5,18 @@
 replicaCount: 1
 
 image:
-  repository: public.ecr.aws/lambda/nodejs
+  repository: effip24/invoice
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "12"
+  tag: "latest"
 
 imagePullSecrets: []
 nameOverride: "nginx-app1-dev"
 fullnameOverride: "nginx-app1-dev"
 command: |
-  ["app.handler"]
+  ["npm"]
+args: |
+  ["run", "start"]
 
 serviceAccount:
   # Specifies whether a service account should be created
