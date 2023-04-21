@@ -40,7 +40,7 @@ securityContext:
 
 service:
   annotations:
-    external-dns.alpha.kubernetes.io/hostname: nginx1.cmcloudlab879.info
+    external-dns.alpha.kubernetes.io/hostname: nginx1.cmcloudlab1745.info
   type: NodePort
   port: 80
   targetPort: 80
@@ -51,9 +51,8 @@ ingress:
   className: ""
   annotations:
     kubernetes.io/ingress.class: alb
-    external-dns.alpha.kubernetes.io/hostname: nginx1.cmcloudlab879.info
   hosts:
-    - host: nginx1.cmcloudlab879.info
+    - host: nginx1.cmcloudlab1745.info
       paths:
         - path: /
           pathType: Prefix
@@ -61,8 +60,8 @@ ingress:
           port: 443
   tls:
     - hosts:
-        - "nginx1.cmcloudlab879.info"
-      secretName: nginx1-dev
+        - "nginx1.cmcloudlab1745.info"
+      secretName: nginx-app1-dev
 
 resources:
   {}
