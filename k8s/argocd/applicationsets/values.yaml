@@ -5,9 +5,9 @@ applicationsets:
     project: default
     repoURL: https://github.com/effip24/devops-aws-infra.git
     targetRevision: main
-    path: k8s/charts/main-apps/
+    path: k8s/charts/main-apps/values/dev/
     valueFiles:
-      - values/dev/app1.yaml
+      - values.invoice1.yaml
 
   - name: nginx2-dev
     namespace: dev
@@ -15,9 +15,9 @@ applicationsets:
     project: default
     repoURL: https://github.com/effip24/devops-aws-infra.git
     targetRevision: main
-    path: k8s/charts/main-apps/
+    path: k8s/charts/main-apps/values/dev/
     valueFiles:
-      - values/dev/app2.yaml
+      - values.invoice2.yaml
 
   - name: metrics-server-dev
     namespace: kube-system
