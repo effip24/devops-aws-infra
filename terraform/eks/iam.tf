@@ -47,3 +47,5 @@ resource "aws_iam_policy_attachment" "eks_admin_assume_role_policy_attachment" {
   policy_arn = aws_iam_policy.eks_admin_assume_role_policy.arn
   groups     = [aws_iam_group.eks_admin_group.name]
 }
+
+# Developer Policy 
