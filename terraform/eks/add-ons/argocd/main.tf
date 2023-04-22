@@ -9,14 +9,14 @@ resource "helm_release" "argocd" {
   values = [
     <<EOF
     server:
-      config:
-        url: http://argocd.${var.external_dns_domain_filter}
+      extraArgs:
+      - --insecure    
       service:
         type: NodePort
         port: 80
         targetPort: 8080
         annotations:
-          external-dns.alpha.kubernetes.io/hostname: argocd.${var.external_dns_domain_filter}
+          external-dns.alpha.kubernetes.io/hostname: argocd.${var.external_dns_domain_filter}     
       ingress:
         enabled: true
         hosts: ["argocd.${var.external_dns_domain_filter}"]
@@ -24,10 +24,12 @@ resource "helm_release" "argocd" {
           - hosts:
               - argocd.${var.external_dns_domain_filter}
             secretName: argocd-secret
-        annotations:
+        annotations:          
           kubernetes.io/ingress.class: alb
           alb.ingress.kubernetes.io/scheme: internet-facing
           alb.ingress.kubernetes.io/group.name: dev
+          alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS":443}]'   
+          alb.ingress.kubernetes.io/actions.ssl-redirect: '{"Type": "redirect", "RedirectConfig": { "Protocol": "HTTPS", "Port": "443", "StatusCode": "HTTP_301"}}'    
     EOF
   ]
 }
