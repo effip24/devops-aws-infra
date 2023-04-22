@@ -1,58 +1,39 @@
-resource "kubectl_manifest" "cluster_developer_group" {
+resource "kubectl_manifest" "cluster_developer_role" {
   yaml_body = <<-YAML
     apiVersion: rbac.authorization.k8s.io/v1
-    kind: Group
+    kind: Role
     metadata:
+      namespace: dev
       name: developer
-  YAML
+    rules:
+    - apiGroups: [""]
+      resources: ["pods"]
+      verbs: ["get", "watch", "list"]
+      YAML
 
   depends_on = [
     module.eks
   ]
 }
 
-resource "kubectl_manifest" "cluster_role_developer" {
-  yaml_body = <<-YAML
-    apiVersion: rbac.authorization.k8s.io/v1
-    kind: ClusterRole
-    metadata:
-      name: pod-editor
-    rules:
-      - apiGroups:
-        - ""
-        resources:
-        - pods
-        verbs:
-        - get
-        - watch
-        - list
-        - create
-        - update
-        - patch
-        - delete
-  YAML
-
-  depends_on = [
-    module.eks, kubectl_manifest.cluster_developer_group
-  ]
-}
-
-resource "kubectl_manifest" "role_binding_developer" {
+resource "kubectl_manifest" "cluster_developer_role_binding" {
   yaml_body = <<-YAML
     apiVersion: rbac.authorization.k8s.io/v1
     kind: RoleBinding
     metadata:
-      name: pod-editor-devs
+      name: developer
+      namespace: dev
     subjects:
-      - kind: Group
-        name: developer
-    roleRef:
-      kind: ClusterRole
-      name: pod-editor
+    - kind: User
+      name: eks-developer
       apiGroup: rbac.authorization.k8s.io
-  YAML
+    roleRef:
+      kind: Role
+      name: developer
+      apiGroup: rbac.authorization.k8s.io
+      YAML
 
   depends_on = [
-    module.eks, kubectl_manifest.cluster_developer_group
+    module.eks
   ]
 }

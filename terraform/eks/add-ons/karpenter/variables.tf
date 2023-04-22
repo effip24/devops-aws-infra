@@ -33,7 +33,3 @@ variable "eks_cluster_endpoint" {
 variable "karpenter_tags" {
   type = any
 }
-
-variable "eks_cluster_certificate_authority_data" {
-  type = any
-}

@@ -61,22 +61,26 @@ inputs = {
 
   is_domain_private_zone = false
 
+  create_karpenter = true
   karpenter_chart_repo = "oci://public.ecr.aws/karpenter"
   karpenter_chart_name = "karpenter"
   karpenter_chart_version = "v0.27.3"
 
+  create_external_dns = true
   external_dns_chart_repo = "https://kubernetes-sigs.github.io/external-dns/"
   external_dns_chart_name = "external-dns"
   external_dns_chart_version = "1.12.2"
   external_dns_provider = "aws"
   external_dns_aws_region = local.region
   external_dns_source = "ingress"
-  external_dns_domain_filter = "cmcloudlab319.info"
+  external_dns_domain_filter = "cmcloudlab1814.info"
 
+  create_load_balancer_controller = true
   lb_controller_chart_repo = "https://aws.github.io/eks-charts"
   lb_controller_chart_name = "aws-load-balancer-controller"
   lb_controller_chart_version = "1.5.2"
-
+  
+  create_argocd = true
   argocd_namespace = "argocd"
   argocd_repo = "https://argoproj.github.io/argo-helm"
   argocd_chart = "argo-cd"

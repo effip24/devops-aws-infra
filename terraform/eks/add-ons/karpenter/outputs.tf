@@ -2,6 +2,6 @@ output "karpenter_role_arn" {
   value = module.karpenter.role_arn
 }
 
-output "created" {
+output "karpenter_created" {
   value = true
 }

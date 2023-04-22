@@ -24,6 +24,4 @@ resource "helm_release" "lb-controller" {
     name  = "serviceAccount.annotations.eks\\.amazonaws\\.com/role-arn"
     value = module.iam_lb_controller_role.iam_role_arn
   }
-
-
 }

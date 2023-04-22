@@ -61,6 +61,10 @@ variable "is_domain_private_zone" {
 }
 
 # karpenter main vars -------------
+variable "create_karpenter" {
+  type = bool
+}
+
 variable "karpenter_chart_repo" {
   type = string
 }
@@ -74,6 +78,10 @@ variable "karpenter_chart_version" {
 }
 
 # external-dns main vars -------------
+variable "create_external_dns" {
+  type = bool
+}
+
 variable "external_dns_chart_repo" {
   type = string
 }
@@ -103,6 +111,10 @@ variable "external_dns_domain_filter" {
 }
 
 # load-balancer-controller main vars -------------
+variable "create_load_balancer_controller" {
+  type = bool
+}
+
 variable "lb_controller_chart_repo" {
   type = string
 }
@@ -116,6 +128,10 @@ variable "lb_controller_chart_version" {
 }
 
 # argocd main vars -------------
+variable "create_argocd" {
+  type = bool
+}
+
 variable "argocd_namespace" {
   type = string
 }
